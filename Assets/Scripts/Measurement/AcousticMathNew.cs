@@ -208,7 +208,7 @@ class AcousticMathNew
     public static void BPFilter(double[] input, out double[] signals, int sampleLength)
     {
         int c_freq = 1000;
-        float bw = 1 / 3;
+        float bw = 1f/3f;
         int fs = 44100;
         float omega = 2 * Mathf.PI * c_freq / fs;
         float alpha = Mathf.Sin(omega) * (float)Math.Sinh(Mathf.Log(2) / 2 * bw * omega / Math.Sin(omega));

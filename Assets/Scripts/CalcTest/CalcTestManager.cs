@@ -50,7 +50,9 @@ namespace uOSC
             //ifftTest
             if (Input.GetKeyDown(KeyCode.I))
                 IfftTest();
-
+            //filterTest
+            if (Input.GetKeyDown(KeyCode.F))
+                FilterTest();
         }
 
 
@@ -118,6 +120,18 @@ namespace uOSC
                 Debug.Log("diff" + dif.ToString());
             }
             RecordManager.Dump2File(ifft);
+        }
+
+        private void FilterTest()
+        {
+            TextAsset asset1 = Resources.Load("TestData/whitenoiseTest", typeof(TextAsset)) as TextAsset;
+            double[] white = new double[asset1.bytes.Length / 8];
+            white = readArray.bytes2array(asset1, asset1.bytes.Length / 8);
+            //バンドパスフィルタ
+            double[] BPwhite;
+            AcousticMathNew.BPFilter(white, out BPwhite, sampleLength);
+            RecordManager.Dump2File(BPwhite);
+            Debug.Log("Filter Fin!");
         }
     }
 }
