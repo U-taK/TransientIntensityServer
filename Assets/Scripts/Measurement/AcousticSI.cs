@@ -38,8 +38,8 @@ class AcousticSI{
         for (int j = 0; j < i01.Length; j++)
         {
             var ix = -(i01[j] - i02[j] + i23[j] - i13[j] - (2 * i12[j])) / 4;
-            var iy = -(i01[j] + i02[j] + i03[j]) / Mathf.Sqrt(6);
-            var iz = -(-i01[j] - i02[j] + (2 * i03[j]) + (3 * i13[j]) + (3 * i23[j])) / (4d * Mathf.Sqrt(3));
+            var iz = -(i01[j] + i02[j] + i03[j]) / Mathf.Sqrt(6);
+            var iy = -(-i01[j] - i02[j] + (2 * i03[j]) + (3 * i13[j]) + (3 * i23[j])) / (4d * Mathf.Sqrt(3));
             intensity[j] = new Vector3((float)ix, (float)iy, (float)iz);
         }
         return intensity;
