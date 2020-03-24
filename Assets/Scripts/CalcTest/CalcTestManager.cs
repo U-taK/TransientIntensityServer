@@ -22,7 +22,7 @@ namespace uOSC
         //空間基準マーカレプリカ
         [SerializeField]
         GameObject copyStandard;
-
+        public double[] ifft;
         // Use this for initialization
         void Start()
         {
@@ -47,7 +47,9 @@ namespace uOSC
         // Update is called once per frame
         void Update()
         {
-            //瞬時音響インテンシティパラメータの切り替え
+            //ifftTest
+            if (Input.GetKeyDown(KeyCode.I))
+                IfftTest();
 
         }
 
@@ -90,6 +92,32 @@ namespace uOSC
             var parameter = VectorObj.AddComponent<ParameterStorage>();
             parameter.PutIntensity(iintensities, levels);
             return msPoint;
+        }
+
+        private void IfftTest()
+        {
+            ifft = new double[sampleLength];
+            // サンプル数の2の乗数を計算
+            int length_bit = (int)(Mathf.Log(sampleLength, 2f));
+            System.Numerics.Complex[] temp = new System.Numerics.Complex[sampleLength];
+            System.Numerics.Complex[] fft = new System.Numerics.Complex[sampleLength];
+            
+            //複素数に変更
+            for (int i = 0; i < sampleLength; i++)
+            {
+                temp[i] = new System.Numerics.Complex((double)signal[0][i], 0);
+            }
+            //FFT
+            AcousticMathNew.FFT(length_bit, temp, out fft);
+            //iFFT
+            AcousticMathNew.IFFT(length_bit, fft, out ifft);
+
+            for(int j = 0; j < sampleLength; j++)
+            {
+                var dif = ifft[j] - signal[0][j];
+                Debug.Log("diff" + dif.ToString());
+            }
+            RecordManager.Dump2File(ifft);
         }
     }
 }
