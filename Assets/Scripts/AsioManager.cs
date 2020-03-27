@@ -260,12 +260,12 @@ public class AsioManager : MonoBehaviour {
 
             for (int sample = 0; sample < sampleLength; sample++)
             {
-                //outputSoundSignals[micID][sample] = (double)calibValue[0] * (double)tempIntMic0[sample] / (double)Mathf.Pow(10, 8);
-                temp[sample] = new System.Numerics.Complex((double)tempSoundSignals[micID][sample] / (double)Mathf.Pow(10, 8), 0);
+                outIFFT[sample] = (double)tempSoundSignals[micID][sample] / (double)Mathf.Pow(10, 8);
+                //temp[sample] = new System.Numerics.Complex((double)tempSoundSignals[micID][sample] / (double)Mathf.Pow(10, 8), 0);
             }
             //キャリブレーション
 
-            AcousticMathNew.FFT(length_bit, temp, out calib);
+            /*AcousticMathNew.FFT(length_bit, temp, out calib);
             for (int sample = 0; sample < sampleLength; sample++)
             {
                 //キャリブレーション
@@ -273,7 +273,7 @@ public class AsioManager : MonoBehaviour {
                 //バンドパスフィルタ
             }
             //出力信号に戻す
-            AcousticMathNew.IFFT(length_bit, temp, out outIFFT);
+            AcousticMathNew.IFFT(length_bit, temp, out outIFFT);*/
             //バンドパスフィルタ
             AcousticMathNew.BPFilter(outIFFT, out outSoundSignals[micID], sampleLength);
         }

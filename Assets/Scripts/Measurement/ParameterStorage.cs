@@ -37,7 +37,7 @@ namespace uOSC {
                 Debug.Log("Sound intensity of average is " + sumLevel);
                 transform.localRotation = Quaternion.LookRotation(sum * 10000000000);
                 transform.localScale = new Vector3(SettingManager.objSize, SettingManager.objSize, SettingManager.objSize*4);
-                Color vecObjColor = ColorBar.DefineColor(1, sumLevel, 70f, 85f);
+                Color vecObjColor = ColorBar.DefineColor(1, sumLevel,SettingManager.lvMin, SettingManager.lvMax);
                 gameObject.GetComponent<Renderer>().material.color = vecObjColor;
                 i = 0;
             }
@@ -79,7 +79,7 @@ namespace uOSC {
         {
             transform.localRotation = Quaternion.LookRotation(soundIntensity[i] * 10000000000);
             transform.localScale = new Vector3(SettingManager.objSize, SettingManager.objSize, SettingManager.objSize*4);
-            Color vecObjColor = ColorBar.DefineColor(1, intensityLevel[i], 65f, 105f);
+            Color vecObjColor = ColorBar.DefineColor(1, intensityLevel[i], SettingManager.lvMin, SettingManager.lvMax);
             gameObject.GetComponent<Renderer>().material.color = vecObjColor;
         }
     }
