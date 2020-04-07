@@ -59,7 +59,8 @@ namespace uOSC {
         {
             //byteファイル風読み込み
             //TextAsset asset = Resources.Load("whitenoise", typeof(TextAsset)) as TextAsset;
-            TextAsset asset = Resources.Load("SIN1kHz", typeof(TextAsset)) as TextAsset;
+            //TextAsset asset = Resources.Load("SIN1kHz", typeof(TextAsset)) as TextAsset;
+            TextAsset asset = Resources.Load("SIN1kHzsMin", typeof(TextAsset)) as TextAsset;
             //読込
             Debug.Log("音源長さ:" + asset.bytes.Length / 2);
             Debug.Log("sampleLength:" + osampleLength);

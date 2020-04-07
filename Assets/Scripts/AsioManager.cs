@@ -43,6 +43,7 @@ public class AsioManager : MonoBehaviour {
     static TextAsset csvFile;
     List<double> csvDatas = new List<double>(); // CSVの中身を入れるリスト;
     static System.Numerics.Complex[][] calibdata = new System.Numerics.Complex[4][];
+    static double[] simpleCal = new double[4];
     /// <summary>
     /// 使えるASIOドライバー名を取得(IntPtr型) -> IDと一緒にString型に変換して返す
     /// </summary>
@@ -145,7 +146,6 @@ public class AsioManager : MonoBehaviour {
         {
             sig_int[i] = (int)(100000000 * signal[i]);
         }
-
         IntPtr ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(int)) * osampleLength);
         Marshal.Copy(sig_int, 0, ptr, osampleLength);
         /*
@@ -260,7 +260,7 @@ public class AsioManager : MonoBehaviour {
 
             for (int sample = 0; sample < sampleLength; sample++)
             {
-                outIFFT[sample] = (double)tempSoundSignals[micID][sample] / (double)Mathf.Pow(10, 8);
+                outIFFT[sample] = (double)tempSoundSignals[micID][sample] / (double)Mathf.Pow(10, 8) / simpleCal[micID];
                 //temp[sample] = new System.Numerics.Complex((double)tempSoundSignals[micID][sample] / (double)Mathf.Pow(10, 8), 0);
             }
             //キャリブレーション
@@ -286,7 +286,10 @@ public class AsioManager : MonoBehaviour {
     public static void ReadCalib()
     {
         int sampleLength = 4096;
-
+        simpleCal[0] = 0.0774;
+        simpleCal[1] = 0.0723;
+        simpleCal[2] = 0.0584;
+        simpleCal[3] = 0.0822;
         csvFile = Resources.Load("calibdata") as TextAsset;
         StringReader reader = new StringReader(csvFile.text);
         // , で分割しつつ一行ずつ読み込み
